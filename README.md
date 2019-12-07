@@ -13,5 +13,7 @@
 
 3. [顏色相關的預處理 (改變亮度, 色差)](https://nbviewer.jupyter.org/github/jshuang0520/1st-DL-CVMarathon/blob/master/homework/Day_003_HW/Day_003_HW.ipynb) - 透過圖片不同的表示方式實作修圖效果
 
+4. [以圖片為例做矩陣操作 (翻轉, 縮放, 平移)](https://nbviewer.jupyter.org/github/jshuang0520/1st-DL-CVMarathon/blob/master/homework/Day_004_HW/Day_004_HW.ipynb) - 淺談基礎的幾合變換: 翻轉 / 縮放 / 平移
+
 
 
