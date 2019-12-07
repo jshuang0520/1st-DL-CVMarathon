@@ -15,5 +15,5 @@
 
 4. [以圖片為例做矩陣操作 (翻轉, 縮放, 平移)](https://nbviewer.jupyter.org/github/jshuang0520/1st-DL-CVMarathon/blob/master/homework/Day_004_HW/Day_004_HW.ipynb) - 淺談基礎的幾合變換: 翻轉 / 縮放 / 平移
 
-
+5. [透過 OpenCV 做圖並顯示 (長方形, 圓形, 直線, 填色)](https://nbviewer.jupyter.org/github/jshuang0520/1st-DL-CVMarathon/blob/master/homework/Day_005_HW/Day_005_HW.ipynb) - 實作 OpenCV 的小畫家功能
 
