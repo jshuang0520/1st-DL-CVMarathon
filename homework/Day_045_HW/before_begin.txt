@@ -1,0 +1,12 @@
+Sample Code & 作業內容
+【今日無需提交作業，請完成今日範例練習與推薦閱讀，按下「我已完成」按鈕即可】
+
+人臉關鍵點檢測的知識點內容到今天結束，人臉關鍵點檢測是人臉識別其中一個模塊，本課程知識點並未包含完整的人臉識別流程，今天的作業只需您閱讀以下推薦的人臉識別相關文章，理解人臉關鍵點檢測是如何被應用在人臉識別的任務中。
+
+
+
+Deep Face Recognition: A Survey - https://arxiv.org/pdf/1804.06655.pdf
+人臉識別：Deep Face Recognition論文閱讀 - https://yongyuan.name/blog/deep-face-recognition-note.html
+【論文學習】人臉識別 —— Deep Face Recognition: A Survey. 新人必看入門總結 - https://blog.csdn.net/DL_wly/article/details/93902260
+
+https://cvdl-fileentity.cupoy.com/marathon/homework/attach/1586160204340/1586167675901/large
