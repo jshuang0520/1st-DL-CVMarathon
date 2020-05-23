@@ -1,0 +1,4 @@
+Sample Code & 作業內容
+運用Keras搭建簡單的Convolution2D Layer＋BN＋Activation Fucntion層
+
+請點擊下方檢視範例作業請提交Day014_HW.ipynb
