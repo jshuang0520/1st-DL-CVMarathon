@@ -1,0 +1,6 @@
+Sample Code & 作業內容
+運用Keras 搭建一個CNN 分類器，Training_Data使用Cifar10，嘗試在驗證集資料上達到準確度80%
+
+
+
+請點擊下方檢視範例作業請提交Day015_Cifar_HW.ipynb
