@@ -1,0 +1,6 @@
+Sample Code & 作業內容
+搭建Inception-ResNet中的 Inception Block A-C
+嘗試導入Inception Block到Vgg16的結構中
+
+
+請點擊下方檢視範例，作業請提交Day020_HW.ipynb
