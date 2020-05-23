@@ -1,0 +1,7 @@
+Sample Code & 作業內容
+搭建一個Inception Block
+結合BatchNormalization與Inception Block 到Vgg16的結構中
+
+
+請點擊下方檢視範例，作業請提交Day019_HW.ipynb
+
