@@ -1,0 +1,6 @@
+Sample Code & 作業內容
+搭建一個Vgg 16的模型
+
+
+
+請點擊下方檢視範例，作業請提交Day018_Vgg16_HW.ipynb
