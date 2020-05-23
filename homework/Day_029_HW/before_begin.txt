@@ -1,0 +1,36 @@
+Sample Code & 作業內容
+今日作業：徹底了解程式中重要步驟的原理
+
+
+
+請點擊下方檢視範例參考Data資料夾，作業請提交提交執行完的Build SSD_VGG.ipynb檔案。
+
+
+
+請注意：資料夾「Object Detection 程式導讀」需全部一起下載。
+
+
+
+檔案更動：資料夾「Object Detection 程式導讀」>「data」內的 coco.py 有更新，若已經下載資料夾的學員，可以單獨至範例下載 coco.py 檔案，若從未下載資料夾，則只需要下載整個資料夾即可，不需重複下載範例的coco.py 檔案。更新時間 2020/01/10 11:03 AM
+
+
+
+新增下載檔案：更新時間 2020/02/15 18:25 AM
+
+因部分資料被移除，除了Data資料以外，再麻煩額外下載以下三個檔案：
+
+
+
+1.demo weight(ssd300_mAP_77.43_v2.pth'):
+
+https://s3.amazonaws.com/amdegroot-models/ssd300_mAP_77.43_v2.pth
+
+2.載入資料型態
+
+標註：
+
+http://images.cocodataset.org/annotations/annotations_trainval2014.zip
+
+影像：
+
+http://images.cocodataset.org/zips/train2014.zip
