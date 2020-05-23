@@ -1,0 +1,19 @@
+Sample Code & 作業內容
+請詳細閱讀程式碼，理解如何利用 pandas 及 numpy 讀取 kaggle 人臉關鍵點資料集 csv 文件並轉換為後續使用的關鍵點以及圖像資料結構。
+
+
+
+理解後請嘗試將關鍵點畫在圖像上，確保圖像及資料有正確讀取，如下圖所示。
+
+Hint: 可以用
+
+matplotlib 的 scatter
+https://matplotlib.org/3.1.1/gallery/shapes_and_collections/scatter.html
+
+或者
+
+opencv 的 cv2.circle
+https://docs.opencv.org/master/dc/da5/tutorial_py_drawing_functions.html
+
+
+請點擊下方檢視範例參考Day42_explore_facial_keypoint_data_Sample.ipynb，作業請提交Day42_explore_facial_keypoint_data_HW.ipynb
