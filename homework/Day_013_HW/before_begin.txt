@@ -1,0 +1,6 @@
+Sample Code & 作業內容
+運用Pooling 與Flatten觀看輸出Tensor的尺寸變化。
+
+
+
+請點擊下方檢視範例作業請提交Day013_HW.ipynb
