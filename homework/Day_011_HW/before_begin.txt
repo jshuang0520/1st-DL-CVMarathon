@@ -1,0 +1,8 @@
+Sample Code & 作業內容
+作業內容：
+
+運用Keras搭建簡單的Dense Layer與 Convolution2D Layer，使用相同Neurons數量，計算總參數量相差多少。
+
+
+
+請點擊下方檢視範例作業請提交Day011_CNN_計算參數量_HW.ipynb
