@@ -1,0 +1,9 @@
+Sample Code & 作業內容
+請嘗試對原訓練集的圖像做左右翻轉來做 augmentation 以降低人臉關鍵點檢測的 loss
+
+
+
+Note: 圖像做左右翻轉之後，groundtruth 的關鍵點也要適當地調整哦
+
+
+請點擊下方檢視範例參考Day44_train_facial_keypoint_Sample.ipynb，作業請提交Day44_train_facial_keypoint_HW.ipynb
