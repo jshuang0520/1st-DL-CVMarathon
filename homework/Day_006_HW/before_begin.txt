@@ -1,0 +1,13 @@
+Sample Code & 作業內容
+練習以旋轉變換 + 平移變換來實現仿射變換
+旋轉 45 度 + 縮放 0.5 倍 + 平移 (x+100, y-50)
+
+
+直接建構仿射矩陣 (圖片至少包含 3 個點以上的 pair)
+
+
+cv2.getAffineTransform (譬如：圖片1的點，圖片2的點，input 應該包含兩張對應圖片的點)
+
+
+
+請點擊下方檢視範例參考Day006_Sample.ipynb，作業請提交Day006_affine_HW.ipynb
