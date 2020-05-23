@@ -1,0 +1,19 @@
+[Revised] 深度學習 ＆電腦視覺馬拉松 (Vincent Wu)- final project for recognition on raccoon and kangaroo
+2020/03/09
+My slide: 
+
+    https://www.slideshare.net/VincentWu105/yolov3-229941317
+
+
+
+My github: 
+
+    https://github.com/double1010x2/1st-DL-CVMarathon/tree/master/homework/finalProject/tensorflow-yolov3
+
+
+
+Abstract:
+
+    Use the tensorflow yolov3 by YunYang to recognize the kangaroo and raccoon. Encountered some difficulty about syntax change on different tensorflow version, poor prediction results by low confidence value but low loss value and some bug in this reference Tensorflow yolov3. Some is fixed, but low confidence value is improved a little. Even the model performance is not good to recognize the picture, but I got a lot in this final project. 
+
+個人在百日馬拉松顯示名稱: Vincent Wu

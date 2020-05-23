@@ -1,0 +1,280 @@
+深度學習與電腦視覺期末專題_張祐禎
+2020/02/24
+一、專題摘要 (解釋實作與說明需要解決的問題，限300~500字。)
+1.  期末專題主題
+
+浣熊與袋鼠辨識模型
+
+2.  期末專題基本目標
+
+使用浣熊及袋鼠的資料集進行訓練，使得模型能夠分辨圖片與影片中浣熊及袋鼠的位置及類別。
+
+
+
+
+
+二、實作方法介紹 (介紹使用的程式碼、模組，並附上實作過程與結果的截圖，需圖文並茂。)
+程式碼分為三個部分，分別是:
+
+
+
+1. 資料前處理
+
+2. 訓練模型
+
+3. 驗證結果
+
+
+
+資料前處理
+首先，先將Day039_keras-yolo3所使用到的repo下載下來，並下載浣熊和袋鼠資料集，https://github.com/experiencor/raccoon_dataset 、 https://github.com/experiencor/kangaroo 。
+
+
+
+資料夾階層為:
+
+
+
+day049-050 ---data(訓練資料位置)
+
+
+
+     └--font(標記框線時所需使用的字體檔)
+
+
+
+     └--logs(模型訓練紀錄及位置)
+
+
+
+     └--model_data(預訓練模型及初始化參數)
+
+
+
+     └--yolo3(yolo核心函式)
+
+
+
+     └--animal.txt(訓練資料及label)
+
+
+
+     └--Day050_final_HW.ipynb(此程式碼)
+
+
+
+     └--Kangaroo.mp4(袋鼠測試影片)
+
+
+
+     └--Raccoon.mp4(浣熊測試影片)
+
+
+
+     └--train.py(yolo訓練函式)
+
+
+
+     └--yolo.py(yolo預測函式)
+
+
+
+由於浣熊資料的repo已經輸出標記格式raccoon_labels.csv了，但是袋鼠資料的repo還未輸出，需要手動執行浣熊repo中的xml_to_csv.py將袋鼠repo中的xml資料轉換為csv檔(請注意:在浣熊repo中的xml檔是在annotations資料夾中，袋鼠repo的xml檔是在annots資料夾中，需要修改xml_to_csv.py中路徑annotations改為annots，raccoon_labels.csv改為kangaroo_labels.csv)，最後將兩份.csv檔手動合併為all_labels.csv與所有圖片放置到data資料夾。
+
+
+
+此時資料夾階層為:
+
+
+
+day049-050 ---data(訓練資料位置)
+
+
+
+                                 └--all_labels.csv(浣熊及袋鼠的標記格式，共有484筆標記資料。)
+
+
+
+                                 └--all_images(將袋鼠及浣熊repo中的圖片全部放到此資料夾，檔名不會重複請放心，共有183張袋鼠、200張浣熊，共383張照片。)
+
+
+
+     └--font(標記框線時所需使用的字體檔)
+
+
+
+     └--logs(模型訓練紀錄及位置)
+
+
+
+     └--model_data(預訓練模型及初始化參數)
+
+
+
+     └--yolo3(yolo核心函式)
+
+
+
+     └--animal.txt(訓練資料及label)
+
+
+
+     └--Day050_final_HW.ipynb(此程式碼)
+
+
+
+     └--Kangaroo.mp4(活動提供的袋鼠測試影片)
+
+
+
+     └--Raccoon.mp4(活動提供的浣熊測試影片)
+
+
+
+     └--train.py(yolo訓練函式)
+
+
+
+     └--yolo.py(yolo預測函式)
+
+
+
+以下的程式碼負責把all_labels.csv資料集轉換為訓練模型時需要的格式。
+
+
+
+# 將資料集格式轉為yolo3吃的格式
+if not os.path.exists("animal.txt"):
+    all_labels = open('data/all_labels.csv', 'r')
+    line = all_labels.readline()
+    print(line[:-1].split(','))
+
+    list_file = open('animal.txt', 'w')
+    file_name = ''
+    file_animal = ''
+
+    while line:
+        line = all_labels.readline()
+        if line == '':
+            break
+        line_messages = line[:-1].split(',')
+        print(line_messages)
+        if file_name == line_messages[0]:
+            list_file.write(' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',' + file_animal)
+        else:
+            if file_name != '':
+                list_file.write('\n')
+            file_name = line_messages[0]
+            if line_messages[3] == 'kangaroo':
+                file_animal = '0'
+                list_file.write('data/all_images/' + file_name + ' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',0')
+            else:
+                file_animal = '1'
+                list_file.write('data/all_images/' + file_name + ' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',1')
+    list_file.close()
+else:
+    print("animal.txt exist")
+# 將資料集格式轉為yolo3吃的格式
+if not os.path.exists("animal.txt"):
+    all_labels = open('data/all_labels.csv', 'r')
+    line = all_labels.readline()
+    print(line[:-1].split(','))
+
+    list_file = open('animal.txt', 'w')
+    file_name = ''
+    file_animal = ''
+
+    while line:
+        line = all_labels.readline()
+        if line == '':
+            break
+        line_messages = line[:-1].split(',')
+        print(line_messages)
+        if file_name == line_messages[0]:
+            list_file.write(' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',' + file_animal)
+        else:
+            if file_name != '':
+                list_file.write('\n')
+            file_name = line_messages[0]
+            if line_messages[3] == 'kangaroo':
+                file_animal = '0'
+                list_file.write('data/all_images/' + file_name + ' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',0')
+            else:
+                file_animal = '1'
+                list_file.write('data/all_images/' + file_name + ' ' + line_messages[4] + ',' + line_messages[5] + ',' + line_messages[6] + ',' + line_messages[7] + ',1')
+    list_file.close()
+else:
+    print("animal.txt exist")
+
+
+訓練模型
+此部分採用yolo_weights.h5預訓練模型，請確保以下檔案皆在model_data資料夾中，若沒有請到先前的練習中尋找下載方式或是到該repo(https://github.com/qqwweee/keras-yolo3 )中下載。
+
+
+
+model_data(預訓練模型及初始化參數)
+
+
+
+    └--animal_classes.txt(自己新增，內容為kangaroo raccoon，代表0為kangaroo，1為raccoon)
+
+
+
+    └--yolo_anchors.txt
+
+
+
+    └--yolo_weights.h5
+
+
+
+訓練過程與Day041_train_yolov3_Sample.ipynb相同，只有將兩段訓練過程加長為100個epoch，並取消使用TensorBoard，因為沒有要觀察訓練過程的需求，所以沒有將TensorBoard加入callback list，相信教學團隊的超參數!!!
+
+
+
+最終訓練結果loss為14.037。
+
+三、成果展示 (介紹成果的特點為何，並撰寫心得。)
+驗證結果
+結果驗證分為圖片及影片的驗證。
+
+
+
+圖片驗證結果:
+
+
+
+
+影片驗證結果(影片檔案太大，只取片段轉為gif顯示):
+
+
+
+https://imgur.com/fM4MV4x
+
+
+
+https://imgur.com/7GGlKiY
+
+四、結論 (總結本次專題的問題與結果)
+此練習中可以學習到如何使用預訓練模型配合自行蒐集的資料集實作出一個物件偵測的模型，在此專題中僅僅使用了兩種類別的資料(浣熊及袋鼠)，所以對於其他動物有可能會檢錯(浣熊影片的主人還有養狗，狗可能會被誤判為袋鼠或浣熊)，但是以原本預訓練的模型卻可以精準抓到狗，所以只要訓練資料集夠多，類別種類夠多，應該能訓練成夠通用的物件偵測模型。
+
+
+
+yolo v3用在此兩類分類模型中，在我的設備中只能達到約13fps的速度，以活動影片(30fps)來說，還是無法到達實時檢測的程度，可能要利用tiny yolo來將模型瘦身。
+
+
+
+礙於篇幅，專題所使用到的技術及程式細節無法在文章中充分表達，可以直接下載我上傳的作業程式碼來跑看看(https://github.com/ChickenChang/1st-DL-CVMarathon/blob/master/homework/Day050_final_HW.ipynb)。
+
+
+
+五、期末專題作者資訊 (請附上作者資訊)
+1.   個人Github連結
+
+https://github.com/ChickenChang/1st-DL-CVMarathon
+
+
+
+2.   個人在百日馬拉松顯示名稱
+
+張祐禎

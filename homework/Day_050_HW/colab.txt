@@ -1,0 +1,46 @@
+運用Colab練習程式與訓練模型
+2019年12月12日
+有鑒於部分學員遇到環境架設問題，在這裡向大家介紹一個好用的平台，也就是Google所推出的Colab，電腦沒有GPU的學員也可以運用Colab嘗試訓練模型，像是Cifar10、Breaking Captcha單元的作業，Colab皆能提供足夠的資源訓練，並且大多常用的套件皆已安裝，其中包括cv2,Tensorflow,Keras,Pytorch，下方向大家介紹如何使用Colab
+
+
+
+1.google直接收尋colab，點入第一個連結
+
+
+2.創建python3 notebook
+
+
+3.默認是CPU instance，此時我們可以進入Runtime中的 Change Runtime type選擇GPU
+
+
+
+4. 其操作跟local端的jupyter notebook相同，開頭加驚嘆號則變成terminal,cmd的功能，此時我們可以輸入!nvidia-smi確認是哪顆GPU(會隨機選擇，目前google有提供K80,P100等等，超佛～)
+
+
+5.接下來大家就可以把作業複製上來練習，並且能使用GPU訓練！
+
+
+6.如果要訓練自己的資料，可以把資料先上傳Google雲端，再用colab與雲端相連，代碼如下，按造步驟超做即可，而要安裝新的package 也可以直接輸入 !pip install (要安裝的package)
+
+
+Colab目前皆為免費，各為學員可以多多運用。
+
+分享
+留言(2)
+胡
+胡連福
+2020/01/14
+謝謝專家提供的資訊.
+另外請教專家一個問題:
+1. drive.mount('/content/drive') 授權連上colab後，colab就有權限操作我們在google drive的檔案，請問colab會不會把我們的檔案clone過去 ? 是否會變成公開資料 ?
+
+喜歡
+不喜歡
+回覆
+楊哲寧
+2020/02/07
+您好，不用擔心，colab沒有任何權限去存取你的資料，Instance關掉後就會清空
+
+喜歡
+不喜歡
+回覆

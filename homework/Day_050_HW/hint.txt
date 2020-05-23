@@ -1,0 +1,70 @@
+影像前處理、標籤前處理與Loss Function(Day15)
+2019年12月18日
+有鑒於部分同學對於前處理、Loss的部份比較不熟悉，在這裡做補充：
+
+1.影像前處理：Normalization
+
+首先下方的code是用來Normalize我們的輸入影像，這也是ML裡常見的方式，就是讓資料分佈趨近於常態分佈，公式為(x-平均值)/標準差，而之所以會有+1e-7這項是為了避免分母為0。
+
+Normalization方式有相當多種，最常見也最簡單的像是x/255.，使所有資訊介於0-1，又或是(x/127.5)-1，使所有資訊介於-1到1之間等等。
+
+
+
+def normalize(X_train,X_test):
+
+        mean = np.mean(X_train,axis=(0,1,2,3))
+
+        std = np.std(X_train, axis=(0, 1, 2, 3))
+
+        X_train = (X_train-mean)/(std+1e-7)
+
+        X_test = (X_test-mean)/(std+1e-7) 
+
+        return X_train, X_test,mean,std
+
+
+
+2.OneHotEncoder
+
+下方的code則是在做OneHotEncode，我們知道10類的分類輸出是10維，假如原本label是0應該要轉成[1,0,0,0,0,0,0,0,0]，才能與模型輸出對得起來，進而計算loss函數，因此OneHotEncoder就是將原本[1,4,5...] index的 label轉換成上方的形式，而fit_transform就是去記住這個資料集的encoding方式再轉換，transform則是依照原本記住的轉換方式來轉換現在這個資料集。
+
+
+
+one_hot=OneHotEncoder()
+
+y_train=one_hot.fit_transform(y_train).toarray()
+
+y_test=one_hot.transform(y_test).toarray()
+
+
+
+3.Keras compile
+
+
+
+首先：optimizer是用來更新參數的優化器，現今常用的如'Adam'、'AdaGrad'、'SGD'、'Ranger'等等，在這裡我們不會深究，有興趣了解的學員可以觀看這篇Medium：https://medium.com/%E9%9B%9E%E9%9B%9E%E8%88%87%E5%85%94%E5%85%94%E7%9A%84%E5%B7%A5%E7%A8%8B%E4%B8%96%E7%95%8C/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92ml-note-sgd-momentum-adagrad-adam-optimizer-f20568c968db
+
+
+
+loss function的選用上，regression問題常見如Mean Square Error，分類問題常見是CrossEntropy(多元分類或Binary CrossEntropy)
+
+
+
+classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+
+
+
+在keras中：
+
+多元分類：'categorical_crossentropy'
+
+二元分類：'binary_crossentropy'
+
+Regression: 'mean_squared_error'
+
+我有寫一篇Medium介紹不同Loss，可以參考：https://medium.com/@CinnamonAITaiwan/cnn%E6%A8%A1%E5%9E%8B-%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8-loss-function-647e13956c50
+
+
+
+如有任何問題都歡迎再提問。
+

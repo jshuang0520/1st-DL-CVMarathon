@@ -1,0 +1,177 @@
+深度學習與電腦視覺期末專題_楊詠竣(Felix)
+2020/03/09
+一、專題摘要
+期末專題主題：布匹瑕疵檢測
+期末專題基本目標(分為4個部分)
+Target 1：分配資料集
+Target 2：訓練模型
+Target 3：驗證模型
+Target 4：檢測瑕疵
+
+
+二、實作方法介紹
+　　資料集來源：雪浪製造AI挑戰賽 - 視覺計算輔助良品檢驗
+
+　　資料集相關網址：https://tianchi.aliyun.com/competition/entrance/231666/introduction
+
+        實作將採用初賽訓練集，資料分類包含如下(點圖可放大)：
+
+
+　　原賽程官方給出的分類(點圖可放大)：
+
+
+　　由於總類太多(有48種)，採同賽程分類，但不包含正常與其他，共10種(表中順序是由程式產生)，並以9:1的比例分為訓練集(train)與驗證集(val)(點圖可放大)：
+
+
+sets_name = ['train', 'val']
+
+def process_ids(sets, sets_name, folder, subfolder, set_, lists):
+    for name in sets_name:
+        set_.add((subfolder, name))
+
+        lists[subfolder].setdefault(name, {})
+        save_ids(sets[sets_name.index(name)], name, folder, subfolder, lists)
+
+def save_ids(subset, name, folder, subfolder, lists):
+#     image_list = []
+    for filename in subset:            
+#         img = cv2.imread(filename)
+
+#         if img is not None:
+#             image_list.append(img)
+        id_ = os.path.splitext(os.path.split(filename)[1])[0]
+        lists[subfolder][name].setdefault(id_, f'{folder}/{subfolder}/{id_}.jpg')
+
+    return lists
+
+def load_info(folder):
+    classes = []
+    set_ = set()
+    image_ids = {}
+    
+    for subfolder in os.listdir(folder):
+        classes.append(subfolder)
+        path = os.path.join(folder, subfolder)
+        train_file_paths = glob(path + '/*.jpg')
+        train, val = train_test_split(train_file_paths, test_size=0.1, shuffle=True) # 把圖像分成訓練集跟驗證集，比例為9:1
+        image_ids.setdefault(subfolder, {})
+        process_ids([train, val], sets_name, folder, subfolder, set_, image_ids)
+
+    return set_, classes, image_ids
+
+train_folder = 'xuelang_train'
+
+set_, classes, image_ids = load_info(train_folder)
+sets_name = ['train', 'val']
+
+def process_ids(sets, sets_name, folder, subfolder, set_, lists):
+    for name in sets_name:
+        set_.add((subfolder, name))
+
+        lists[subfolder].setdefault(name, {})
+        save_ids(sets[sets_name.index(name)], name, folder, subfolder, lists)
+
+def save_ids(subset, name, folder, subfolder, lists):
+#     image_list = []
+    for filename in subset:            
+#         img = cv2.imread(filename)
+
+#         if img is not None:
+#             image_list.append(img)
+        id_ = os.path.splitext(os.path.split(filename)[1])[0]
+        lists[subfolder][name].setdefault(id_, f'{folder}/{subfolder}/{id_}.jpg')
+
+    return lists
+
+def load_info(folder):
+    classes = []
+    set_ = set()
+    image_ids = {}
+    
+    for subfolder in os.listdir(folder):
+        classes.append(subfolder)
+        path = os.path.join(folder, subfolder)
+        train_file_paths = glob(path + '/*.jpg')
+        train, val = train_test_split(train_file_paths, test_size=0.1, shuffle=True) # 把圖像分成訓練集跟驗證集，比例為9:1
+        image_ids.setdefault(subfolder, {})
+        process_ids([train, val], sets_name, folder, subfolder, set_, image_ids)
+
+    return set_, classes, image_ids
+
+train_folder = 'xuelang_train'
+
+set_, classes, image_ids = load_info(train_folder)
+　　這10個分類共有573張圖片，且檔案內有包含已標註好的XML檔(點圖可放大)：
+
+
+　　使用LabelImg觀看圖像與標註狀況(點圖可放大)：
+
+
+　　原測試集(test)中共有1309張圖片(點圖可放大)：
+
+
+　　每張圖像大小為2560*1920(應該是採用5MP畫素的相機拍攝的)，但是鏡頭的畸變(Distortion)似乎蠻大的，由於無從與遠心鏡頭相比較，所以訓練結果的好壞差距多少目前不得而知。
+
+　　透過K-means重新計算anchors(點圖可放大)：
+
+
+　　調整YOLO v3的模型(.cfg)內的相關參數(點圖可放大)：
+
+Line 603: set filters=(classes+5)*3 → filters=45
+Line 609: set anchors=重新計算的數值
+Line 610: set classes=10
+Line 689: set filters=(classes+5)*3 → filters=45
+Line 695: set anchors=重新計算的數值
+Line 696: set classes=10
+Line 776: set filters=(classes+5)*3 → filters=45
+Line 782: set anchors=重新計算的數值
+Line 783: set classes=10
+Line 603: set filters=(classes+5)*3 → filters=45
+Line 609: set anchors=重新計算的數值
+Line 610: set classes=10
+Line 689: set filters=(classes+5)*3 → filters=45
+Line 695: set anchors=重新計算的數值
+Line 696: set classes=10
+Line 776: set filters=(classes+5)*3 → filters=45
+Line 782: set anchors=重新計算的數值
+Line 783: set classes=10
+
+　　修改後透過convert重新將YOLO的模型(.cfg)和權重(.weights)轉換為Keras模型(.h5)，並開始訓練模型。
+
+
+
+三、成果展示
+　　訓練好模型後，初步看一下誤差(loss)結果，以及使用測試集來測試瑕疵檢測(點圖可放大)：
+
+
+
+
+
+
+
+四、結論
+　　在Learning rate不調整情況下Loss蠻高的，後續如果再調整，應該會更好！(在沒有專門跑深度學習用的顯示卡情況下，使用免費的Colab來執行，要跑好幾個小時，中途錯誤還要查看原因...)
+
+　　手上有數張歷代版本的樹莓派(Raspberry Pi)，與Jetson Nano Developer Kit，未來也許能調整為邊緣運算的方式來執行。
+
+
+
+　　看完本篇小弟的教學，如果滿意，還希望各位一同學習的學員、陪跑專家、出題教練、Cupoy可以按讚的成員，幫忙點擊愛心圖案(按讚)，也歡迎大家一起切磋，不吝指教，謝謝。
+
+
+
+　　後記：
+
+　　其實本身先前是AOI背景，傳統AOI瑕疵檢測作法漸漸地遇到一些瓶頸，或是傳統AOI作法非常困難，甚至不太可能有可行性的作法；而應用深度學習在電腦視覺上，剛好可以補足無法做到的部分。
+
+　　會選擇這個主題，是因為近期有認識新朋友來找我，希望能做紡織品的檢測，剛好藉由這個機會來實作看看，且剛好也有相關的資料集可以直接拿來做，不用自己去拍攝一堆圖像，還要花時間去標註並產生XML檔。
+
+　　由於同時參加另一個Python網路爬蟲實戰研習馬拉松，一樣也有期末專題要做，花了不少時間在那邊，壓縮了這裡的時間，因此目前無法有比較多可發揮的地方(D43-D48也還沒做，跑完YOLO的部分，就直接衝次期末專題)。
+
+
+
+　　期末專題程式碼連結：https://github.com/FelixYangPersonal/1st-DL-CVMarathon/blob/master/homework/Day049_050_Independent_Study.ipynb
+
+五、期末專題作者資訊
+個人Github連結：https://github.com/FelixYangPersonal/1st-DL-CVMarathon/
+個人在百日馬拉松顯示名稱：Felix

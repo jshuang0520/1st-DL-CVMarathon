@@ -1,0 +1,24 @@
+深度學習與電腦視覺期末專題_Chang Shin Perng
+2020/03/01
+一、專題摘要 
+1. 期末專題主題 ：浣熊與袋鼠辨識模型
+
+2. 期末專題基本目標：本次期末專題主題建立一個模型同時能辨識出浣熊(raccoon)與袋鼠(kangaroo)的類別與位置，並能應用在影片辨識中。
+
+二、實作方法介紹 
+1. 使用的程式碼介紹：主要以Day41_train_yolov3_Sample作基礎程式碼，並在google colab上開啟gpu作運算。此外，影片的辨識部分，參考https://blog.gtwang.org/programming/opencv-webcam-video-capture-and-file-write-tutorial/ 擷取網路攝影機串流的程式碼即可。
+
+2. 使用的模組介紹：採用yolo_weights.h5來做為預先訓練模型，利用gpu運算大約20 分鐘處理完成100個epochs，訓練好的資料在辨識圖片或影片時可以直接拿來使用，不須重新訓練。
+
+三、成果展示 
+
+四、結論 
+
+使用yolo3預先模型來辨識浣熊及袋鼠，並在影片作偵測辨識，讓我對影像處理有更深認識。程式還有許多要修正的地方，例如辨識度不佳，因此還會繼續修改。
+
+因為我沒有gpu，所以在第一次時花了很長時間，也因此改在google colab內使用，也遇到許多瓶頸，尤其是檔案掛載常常出錯又重來，還好初步完成。
+
+五、期末專題作者資訊
+1. 個人Github連結：https://github.com/gausschang/1st-DL-CVMarathon/blob/master/Day050_HomeWork.ipynb
+
+2. 個人在百日馬拉松顯示名稱：Chang Shin Perng

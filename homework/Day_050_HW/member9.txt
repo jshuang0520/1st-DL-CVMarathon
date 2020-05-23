@@ -1,0 +1,185 @@
+深度學習與電腦視覺期末專題_Yan Roo
+2020/02/18
+一、專題摘要 
+
+
+Raccoon & Kangaroo Detection浣熊與袋鼠辨識
+
+
+
+
+
+利用CNN Model來達成物件偵測 (Object Detection)。這次的目標只有兩種類別，分別是浣熊(Raccoon)與袋鼠(Kangaroo)。浣熊資料集來自官方所提供的GitHub連結 [experiencor/raccoon_dataset]( https://github.com/experiencor/raccoon_dataset)
+
+資料集內一共有200張浣熊圖片，圖片尺寸介於178x283 ~ 2000x1333之間不等，每張圖片的浣熊數量也介於1~3之間，標記(Annotation)的格式為Pascal VOC格式。袋鼠資料集同樣來自官方所提供的GitHub連結[experiencor/kangaroo]( https://github.com/experiencor/kangaroo)
+
+網頁上說明有183張袋鼠圖片，但實際上下載後只有164張(缺8、15、35、57、58、63、67、68、70、82、104、106、126、133、135、138、142、160、165)，尺寸介於300x470 ~1038x576，每張圖片的袋鼠數量為1~7隻(有一張是假袋鼠)，標記格式同樣為Pascal VOC。這次採用的物件偵測模型為YOLOv3(You Only Look Once)，原因是其即時性與正確率高。參考[https://github.com/qqwweee/keras-yolo3]( https://github.com/qqwweee/keras-yolo3)程式碼，其主要深度學習架構為Keras。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+二、實作方法介紹 
+
+
+資料前處理
+在qqwweee所撰寫的Keras-yolo3所讀取圖片偵測框的格式較為特殊
+
+path/to/img1.jpg 50,100,150,200,0 30,50,200,120,3
+
+path/to/img2.jpg 120,300,250,600,2
+
+
+
+所以一開始需要將浣熊與袋鼠兩個標記檔內容轉換成該格式。必須用到voc_annotation.py檔，不同於原本作者的版本，我有稍稍做一些改寫。另外在model_data/裡的classes.txt檔存放物件的類別，這次任務只有兩種類別(Raccoon & Kangaroo)。
+
+完成資料的前處理後，接下來是YOLOv3的模型架構(Model)與參數權重(Weights)，可以到YOLO作者Joseph Redmon所製作的網站下載取得這兩個檔案(https://pjreddie.com/darknet/yolo/)。其中還有YOLOv3各種版本架構(320、416、608、tiny與spp)，不同的數字代表不同的Resize Input大小，tiny使用的取樣方式是Max-Pooling，416使用的是Convolutional Stride取樣，spp則是在Convolutional Stride上額外加上SPP(Spatial Pyramid Pooling)取樣(https://github.com/AlexeyAB/darknet/issues/2859)，這次我所使用的模型架構為YOLOv3-spp (416x416 Input)。取得架構檔與參數權重檔之後需要利用convert.py將其轉換成Keras的執行版本。
+
+
+
+訓練
+有鑑於這次的訓練資料量少，一共只有364張圖，所以訓練與驗證資料比為9:1。Batch Size為16，有使用Earlystop與learning_rate reduce，優化器Adam，採用的資料擴充(Data Augmentation)方法有Resize、Horizontal Flip與顏色變化。訓練分為兩個階段，第一階段先將除了output輸出的倒數三層外，其他層全部固定不動進行訓練，這個階段的初始learning rate為1e-3，一共50 Epochs。第二階段則是接續剛才訓練結果進行全參數微調，初始learning rate為1e-4，再訓練50 Epochs。
+
+
+
+
+
+訓練一開始時validation loss高居不下，儘管training loss在Epoch 50時已經降到30，validation loss還是在600徘徊。而當進入到第二階段全架構微調時，validation loss才下降到與training loss差不多的數值(15)，最後在Epoch 95停止。因為資料量少，所以訓練的時間相對來說很短，整個近100個Epochs只花了半個小時完成(15 s/epoch)。
+
+
+
+
+設備
+Ubuntu 16.04 LTS
+Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+1x NVIDIA Titan Xp (12G)
+
+
+
+
+三、成果展示與分析
+
+
+這次的實驗因為沒有mAP等評估方式(Metrics)，所以只能從網路上隨機尋找圖片進行分析。
+
+實驗採用的信心指數(Confidence)為0.3(判斷為該物體的機率超過0.3就會有預選框)，IoU(Intersection of Union)為0.45(兩框重疊超過0.45就會視為同一物體)。
+
+先來看看如果拿原來訓練資料判斷的結果：
+
+True Positive (TP)
+
+
+
+
+
+
+
+
+浣熊的判別大多都沒甚麼問題，但袋鼠的判別框有些感覺並沒有框準，讓袋鼠的頭在框外，在猜測有可能是因為袋鼠尾巴太長的關係。
+
+False Positive (FP)
+
+
+
+
+部分狀況會將其他動物辨認為彼此，尤其是後大腿粗壯或是有耳的動物，通常會被判別成袋鼠，有Overfitting的現象，可能是資料量過少的關係，但這一部分可以將信心值調低解決，目前看起來非袋鼠的信心也都低於50%。
+
+False Negative (FN)
+
+
+
+
+
+
+
+偽陰的情況發生在袋鼠身上較多，原因應該是資料集裡的袋鼠有群聚出現，而浣熊大多都只有獨照，當袋鼠重疊靠近時，就容易讓YOLO判斷為只有單一隻袋鼠，這點缺陷主要是因為YOLO的設計架構，每個網格只負責固定n個預選框(課程Day32~41有介紹)。
+
+
+
+
+
+網路上隨機圖片測試：
+
+
+
+
+
+
+影片測試
+[YOLOv3_Kangaroo](https://youtu.be/8gWVzPGTyMo)
+
+[YOLOv3_Raccoon](https://youtu.be/DV1PYejPbGg)
+
+速度測試
+
+
+
+
+使用Colab的GPU進行執行速度測試(GPU隨機為Nvidia K80s, T4s, P4s 與P100s)。這次測試的GPU為Tesla T4，平均每張圖執行時間54.8毫秒，相當於18.2FPS，略低於官方的20FPS。 
+
+
+
+四、結論
+
+
+這次實驗其實是利用之前SVHN(The Street View House Numbers)的方法進行重製，所以在半天內就完成了。我覺得成果並沒有到非常好，還有很多進步空間，像是資料量過少非常容易導致Overfitting，這方面可以像講義說的用LabelImg自己標記，也可以利用更強化的資料擴增(Mixup、Cutout、模糊、旋轉)等方式達成Regularization。另外正確的訓練方式應該是用validation set取得最佳的hyperparameters後，再將全部資料當作training data訓練，這部分我並沒有做，損失的那10% validation資料或許可以讓結果更好。
+
+之後我也想自己嘗試利用其他高準度的模型(RetinaNet, Faster R-CNN(ResNext101+FPN)，比較彼此之間的準度與速度差距。
+
+五、期末專題作者資訊
+
+
+1. 個人Github連結
+https://github.com/yan-roo/2nd-ML100Days
+
+(題目功課還沒寫完Q^Q)
+
+
+
+2. 個人在百日馬拉松顯示名稱
+Yan Roo
+
+分享
+留言(1)
+楊哲寧
+2020/03/15
+您好，其實寫得相當不錯，您自己也有抓到重點，未來還可以嘗試的方向包括:
+1.收集更多資料，尤其是物件重疊率高的訓練影像，強化模型預測overlapping 的物件
+2.嘗試更大的輸入影像，或是對小物件更敏感的模型，來測試是否對小樣品的偵測有所提升，通常Semantic segmentation比 object detection approach更能偵測到小物件，因此您可以嘗試像是Instance segmentation 系列的模型看看。
+3. 你可以嘗試調整Focal loss的參數以及比較Focal loss 與 OHEM兩種方式的差異。
