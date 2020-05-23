@@ -1,0 +1,8 @@
+Sample Code & 作業內容
+作業內容：
+
+運用Keras搭建簡單的Convolution2D Layer，調整Strides與Padding參數計算輸出feature map大小。
+
+
+
+請點擊下方檢視範例作業請提交Day012_Strides and Padding_HW.ipynb
