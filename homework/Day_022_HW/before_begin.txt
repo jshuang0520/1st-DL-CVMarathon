@@ -1,0 +1,7 @@
+Sample Code & 作業內容
+利用CNN做驗證碼識別
+
+
+
+請點擊下方檢視範例，作業請提交Day022_Captcha_HW.ipynb
+
