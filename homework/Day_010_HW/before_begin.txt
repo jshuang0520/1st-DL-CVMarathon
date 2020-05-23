@@ -1,0 +1,21 @@
+D10：SIFT 其他應用 (keypoint matching)
+SIFT 案例分享: 特徵配對
+
+
+
+Sample Code & 作業內容
+【今日無需提交作業，請完成今日範例練習與思考題，按下「我已完成」按鈕即可】
+
+思考 Brute-Force Matching 在應用上是否有甚麼限制
+特徵點 matching 是否還有其他的應用？panorama?
+
+
+若思考題想要跟出題老師討論交流，歡迎您到共學社團上提問。
+
+https://cvdl-fileentity.cupoy.com/marathon/homework/attach/1586160204307/1586167060761/large
+reference: http://www.cs.cmu.edu/afs/andrew/scs/cs/15-463/f05/pub/www/projects/fproj/mrom/
+
+
+
+請點擊下方檢視範例參考Day010_Sample.ipynb，完成今日練習，按下「我已完成」按鈕即算完成今日知識點
+
