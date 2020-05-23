@@ -1,0 +1,8 @@
+Sample Code & 作業內容
+如何使用已經訓練好的模型？
+
+依照 https://github.com/qqwweee/keras-yolo3 的程式碼，請敘述，訓練模型時，資料集的格式是什麼？具體一點的說，要提供什麼格式的文件來描述資料集的圖片以及 bboxes 的信息呢？
+
+
+
+請點擊下方檢視範例參考Day41_train_yolov3_Sample.ipynb，作業請提交Day41_train_yolov3_HW.ipynb
