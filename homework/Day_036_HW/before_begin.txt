@@ -1,0 +1,10 @@
+Sample Code & 作業內容
+打開 Day36.YOLO 細節理解-網絡架構_HW.ipynb
+動作做做看，運用 Keras，影像通過  1*1 和 3*3 的卷積後，
+影像會有什麼變化?
+多幾層又有甚麼不同的效果?
+
+https://cvdl-fileentity.cupoy.com/marathon/homework/attach/1586160204331/1586167505670/large
+
+
+作業請提交Day36.YOLO 細節理解-網絡架構_HWipynb
