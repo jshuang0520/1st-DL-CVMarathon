@@ -1,0 +1,14 @@
+Sample Code & 作業內容
+【今日無需提交作業，請完成今日參考資料的閱讀與思考題，按下「我已完成」按鈕即可】
+
+
+
+請列舉出 Two Stage 與 One Stage 的經典演算法各三個，並比較其運算速度與精度 (MAP)。
+有空的學員們也可以先預習Object Detection的演進，下一章會較深入的帶大家認識。
+
+https://cvdl-fileentity.cupoy.com/marathon/homework/attach/1586160204320/1586167281389/large
+
+參考資料：
+
+Object Detection: https://www.youtube.com/watch?v=5e5pjeojznk
+Selective Search: https://blog.gtwang.org/programming/selective-search-for-object-detection/
