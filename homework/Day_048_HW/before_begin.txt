@@ -1,0 +1,10 @@
+Sample Code & 作業內容
+【今日無需提交作業，請完成今日範例練習，按下「我已完成」按鈕即可】
+
+
+
+請點擊下方檢視範例，
+
+請參考 Day048_tensorflow_object_detection_api_installation.ipynb 步驟進行工具安裝
+
+請參考 Day048_tensorflow_object_detection_api_training.ipynb 步驟執行訓練模型範例
