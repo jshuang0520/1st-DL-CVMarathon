@@ -1,0 +1,13 @@
+D8：Filter 操作 (Sobel edge detect, Gaussian Blur)
+初探邊緣檢測與模糊圖片操作: 了解 filter 的運用
+
+
+
+Sample Code & 作業內容
+實作邊緣檢測 (Sobel Filter)
+
+比較 Sobel 如果在 uint8 的情況下做會 overflow 的狀況
+比較一次與兩次計算偏微分的結果
+https://cvdl-fileentity.cupoy.com/marathon/homework/attach/1586160204305/1586166909625/large
+
+請點擊下方檢視範例參考Day008_Sample.ipynb，作業請提交Day008_sobel_gaussian_blur_HW.ipynb
