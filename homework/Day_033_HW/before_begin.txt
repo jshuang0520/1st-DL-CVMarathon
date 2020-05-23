@@ -1,0 +1,7 @@
+Sample Code & 作業內容
+在NMS流程中，IoU重疊率參數(nms_threshold )調高，試著思考一下輸出的預測框會有甚麼變化?
+
+
+
+請點擊下方檢視範例參考，作業請提交Day33_YOLO 細節理解 - 網路輸出的後處理_HW.ipynb
+
