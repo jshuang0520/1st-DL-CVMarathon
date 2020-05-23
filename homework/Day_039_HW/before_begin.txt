@@ -1,0 +1,14 @@
+Sample Code & 作業內容
+該版本的 yolov3 實現邏輯主要寫在 `yolo.py` 中 `YOLO` 這個 class 的 `detect_image` ，其回傳已畫上檢測到的 bboxes 和物件類別的圖片。
+
+
+
+請嘗試閱讀及盡量理解 `detect_image` 的程式碼片段 (當然，如果能完全理解這個 repo 的所有程式碼是最好的！)
+
+
+
+請修改/模仿 `detect_image` 的寫法，使其回傳 bboxes 的信息、信心度及 bboxes 對應的類別
+
+
+
+請點擊下方檢視範例參考Day39_yolov3_keras_Sample.ipynb，作業請提交Day39_yolov3_keras_HW.ipynb
