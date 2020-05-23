@@ -1,0 +1,9 @@
+Sample Code & 作業內容
+嘗試使用 keras 來定義一個直接預測 15 個人臉關鍵點坐標的檢測網路，以及適合這個網路的 loss function
+
+Hint: 參考前面的電腦視覺深度學習基礎
+
+
+
+請點擊下方檢視範例參考Day43_define_network_Sample.ipynb，作業請提交Day43_define_network_HW.ipynb
+
