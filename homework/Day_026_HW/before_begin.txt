@@ -1,0 +1,7 @@
+Sample Code & 作業內容
+學習如何架構一個RPN網路
+
+
+
+請點擊下方檢視範例，作業請提交Day026_RPN_HW.ipynb
+
