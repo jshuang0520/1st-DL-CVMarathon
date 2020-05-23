@@ -1,0 +1,7 @@
+Sample Code & 作業內容
+使用Keras做Transfer Learning(以Xception為backbone)
+
+
+
+請點擊下方檢視範例，作業請提交Day021_Transfer Learning_HW.ipynb
+
