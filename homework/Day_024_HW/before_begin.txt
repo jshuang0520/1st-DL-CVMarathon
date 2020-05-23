@@ -1,0 +1,9 @@
+Sample Code & 作業內容
+【今日無需提交作業，請閱讀完今日簡報內容，完成今日知識重點，按下「我已完成」按鈕即可】
+
+
+
+了解 Two Stage 為何通常擁有較高的精度。
+了解 One Stage 的 Default Anchor Box 概念。
+了解 SSD 相較於 YoloV1 的優勢。
+了解 Focal Loss 設計的核心理念，如何處理易分類樣品與類別不均
